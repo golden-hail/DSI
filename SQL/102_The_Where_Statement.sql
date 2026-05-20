@@ -14,7 +14,7 @@ where
   
 -- MULTIPLE CONDITIONS 
 
--- and
+--- and
 select
   *
   
@@ -25,7 +25,7 @@ where
   distance_from_store < 2 or
   gender = 'M';
 
--- or
+--- or
 select
   *
   
@@ -36,12 +36,13 @@ where
   distance_from_store < 2 and
   gender = 'M';
   
--- OTHER OPERATORS
+--- OTHER OPERATORS
 
 /*
 Equal to =
 Not equal to <>
 Greater than/Less than/Equal < > <=
+Between between
 */
 
 select
