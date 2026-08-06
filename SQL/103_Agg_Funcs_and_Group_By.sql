@@ -55,7 +55,7 @@ order by
 
 -- THE HAVING CLAUSE
 /* While WHERE sets filter conditions on the origin table..
-HAVING applies to the aggregated output?
+HAVING applies to the aggregated output
 
 Include product areas that had at least $200,000 worth of sales
 */

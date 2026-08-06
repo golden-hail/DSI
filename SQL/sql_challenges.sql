@@ -94,7 +94,7 @@ select
   *
 from
   arg;
-  -- join at the end to customer_details, and exxcldue the non-matches left join?>? 
+  -- join at the end to customer_details, and exclude the non-matches left join?>? 
 
 -- Weekly Challenge 5
 
@@ -112,19 +112,18 @@ group by
 having
   count(distinct(product_area_id)) > 4;
   
--- Weekly Challenge 8 ## LEARN COELESCE
-
+-- Weekly Challenge 8 
 select
-  *
-  -- a.gender,
-  -- avg(b.loyalty_score) as avg_loyalty_score
-  
+  a.gender,
+  avg(coalesce(b.customer_loyalty_score, 0.5)) as avg_loyalty_scores
+
 from
-  grocery_db.customer_details a 
-  full join grocery_db.loyalty_scores b on a.customer_id = b;
+  grocery_db.customer_details a
+  left join grocery_db.loyalty_scores b on a.customer_id = b.customer_id
   
--- group by gender;
-  
+group by
+  a.gender;
+
 -- Weekly Challenge 12 
 select
   gender,
