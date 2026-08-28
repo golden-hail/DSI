@@ -1,0 +1,7 @@
+**To run local web browser instance of streamlit:**
+
+In terminal: 
+
+>>conda activate dsi-streamlit-web-app
+>>cd C:\Users\aiaqu\git_clones\DSI\Machine Learning\Model_Deployment\Streamlit
+>>streamlit run dsi-streamlit-web-app.py
