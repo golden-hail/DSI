@@ -1,8 +1,6 @@
 ###########################################################
 # AB Testing - Our Task for ABC Grocery 
 ###########################################################
-
-## !! Write what the goal of this is, intelligently, for portfolio
 '''
 Company ABC Grocery has a promo for a "Delivery CLub" they're launching. 
 Signing up costs $100, and provides the customer with free groceries 
@@ -53,8 +51,8 @@ alternate_hypothesis = "There is a relationship between mailer type and signup r
 acceptance_criteria = 0.05
 
 # CALCULATE EXPECTED FREQUENCIES & CHI SQUARE STATISTIC
-chi2_statistic, p_value, dof, expected_values = chi2_contingency(observed_values, correction = False)
-    # correction = Yate's correction, if dof is == 1 [2 x 2] matrix, correction must be False
+chi2_statistic, p_value, dof, expected_values = chi2_contingency(observed_values, correction = True)
+    # correction = Yate's correction, if dof is == 1 [2 x 2] matrix, correction must be True
 print(chi2_statistic, p_value) # 1.941, p_value = 0.1635
     # Because P-Value is greater than our acceptance criteria, we retain the null hypothesis
 
@@ -79,3 +77,4 @@ else:
 
 # We suggest to the company that the mailing didn't make a difference - we can save on the fanciness. Spending extra money on making nice mail with little to no return
 # should be cautious to make conclusions that fancy mail is actually helping people sign up 
+

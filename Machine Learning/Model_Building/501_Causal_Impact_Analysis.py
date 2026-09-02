@@ -19,6 +19,13 @@ ABC Grocery Marketing Team
 # Import required packages
 ################################################################
 
+import warnings
+from scipy.sparse import SparseEfficiencyWarning
+
+# Clear out the annoying Pandas and Statsmodels deprecation warnings
+warnings.filterwarnings('ignore', category=FutureWarning)
+warnings.filterwarnings('ignore', category=SparseEfficiencyWarning)
+
 from causalimpact import CausalImpact
 import pandas as pd
 
@@ -45,7 +52,7 @@ customer_daily_sales = pd.merge(customer_daily_sales, campaign_data, how = 'inne
 causal_impact_df = customer_daily_sales.pivot_table(index = 'transaction_date',
                                                     columns = 'signup_flag',
                                                     values = 'sales_cost',
-                                                    aggfunc = 'mean')
+                                                    aggfunc = 'mean').round(2)
 
 # provide a frequency for our DateTimeIndex (avoids a warning message)
 
@@ -72,9 +79,47 @@ ci = CausalImpact(causal_impact_df, pre_period, post_period)
 # Plot the impact
 ################################################################
 
-ci.plot()
+fig = ci.plot()
 
-# Looks like customers who signed up ended up spending more in store!
+# # Looks like customers who signed up ended up spending more in store!
+
+# # make more titles and stuff first
+# # Save the plot to a file
+# # Save it to your desired file path and format (PNG, PDF, SVG, etc.)
+
+import matplotlib.pyplot as plt
+
+# 1. Generate the plot without immediately showing it, and set the figure size
+# ci.plot(show=False, figsize=(12, 10))
+
+# 2. Get the current active figure and its subpanels (axes)
+fig = plt.gcf()
+axes = fig.get_axes()  # This returns a list of the 3 panels [original, pointwise, cumulative]
+
+# 3. Add an Overall Main Title to the entire figure
+fig.suptitle("Marketing Campaign Causal Impact Analysis", fontsize=18, fontweight='bold', y=0.98)
+
+# 4. Format individual subpanels (0 = Top, 1 = Middle, 2 = Bottom)
+# Panel 0: Original Data & Counterfactual
+axes[0].set_title("Observed vs. Counterfactual Prediction", fontsize=12, color='darkblue', loc='left')
+axes[0].set_ylabel("Sales Revenue ($)", fontsize=11)
+axes[0].grid(True, linestyle='--', alpha=0.5)
+
+# Panel 1: Pointwise Effect
+axes[1].set_title("Pointwise Causal Effect (Daily Difference)", fontsize=12, color='darkblue', loc='left')
+axes[1].set_ylabel("Delta", fontsize=11)
+
+# Panel 2: Cumulative Effect
+axes[2].set_title("Cumulative Effect Over Time", fontsize=12, color='darkblue', loc='left')
+axes[2].set_ylabel("Total Added Value", fontsize=11)
+axes[2].set_xlabel("Timeline", fontsize=12) # x-axis label is best applied to the bottom panel
+
+# 5. Fix overlapping text elements layout automatically
+plt.tight_layout()
+
+# 6. Save or display your heavily formatted chart
+fig.savefig('custom_causal_impact.png', dpi=300, bbox_inches='tight')
+plt.show()
 
 ################################################################
 # Extract the summary statistics & report
